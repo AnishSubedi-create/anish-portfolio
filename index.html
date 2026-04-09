@@ -55,7 +55,7 @@
 }
 
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh;transition:background .3s,color .3s}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;transition:background .3s,color .3s}
 a{color:var(--accent);text-decoration:none;transition:color .2s}
 a:hover{color:var(--accent-2)}
 img{display:block;max-width:100%}
@@ -129,20 +129,29 @@ img{display:block;max-width:100%}
 .mobile-icons svg{width:16px;height:16px}
 
 /* ── Main ── */
-#main{flex:1;max-width:860px;padding:4rem 3.5rem;margin:0 auto}
+#main{width:100%;max-width:860px;padding:4rem 3.5rem;margin:0 auto}
 section{padding-bottom:5rem;border-bottom:1px solid var(--paper-3);margin-bottom:5rem;transition:border-color .3s}
 section:last-child{border-bottom:none;margin-bottom:0}
 .section-label{
   font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem;
+  color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;justify-content:center;gap:.6rem;
 }
-.section-label::after{content:'';display:block;height:1px;width:2rem;background:var(--accent);opacity:.5}
-h2.section-title{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,2.5vw,2.2rem);font-weight:500;line-height:1.2;color:var(--ink);margin-bottom:2rem}
+.section-label::before,.section-label::after{content:'';display:block;height:1px;width:2rem;background:var(--accent);opacity:.5}
+h2.section-title{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,2.5vw,2.2rem);font-weight:500;line-height:1.2;color:var(--ink);margin-bottom:2rem;text-align:center}
 
-/* ── About ── */
-.hero-bio p{font-size:1rem;color:var(--ink-2);line-height:1.85;margin-bottom:1.2rem}
+/* ── About / Hero ── */
+.hero-center{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:2.5rem}
+.hero-photo-wrap{margin-bottom:1.75rem}
+.hero-photo{
+  width:160px;height:160px;border-radius:50%;object-fit:cover;object-position:center top;
+  border:3px solid var(--accent);box-shadow:0 4px 24px rgba(0,0,0,.12);
+  display:block;
+}
+.hero-name{font-family:'EB Garamond',Georgia,serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:500;color:var(--ink);line-height:1.15;margin-bottom:.4rem}
+.hero-title{font-family:'DM Sans',system-ui,sans-serif;font-size:.95rem;color:var(--ink-3);letter-spacing:.04em;margin-bottom:0}
+.hero-bio p{font-size:1rem;color:var(--ink-2);line-height:1.85;margin-bottom:1.2rem;text-align:left}
 .hero-bio p:last-child{margin-bottom:0}
-.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.75rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.75rem;justify-content:center}
 .tag{
   font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.05em;
   padding:.25rem .7rem;border:1px solid var(--paper-3);border-radius:2px;
@@ -267,8 +276,8 @@ h2.section-title{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,
 .fade-in.visible{opacity:1;transform:none}
 
 /* ── Mobile ── */
+/* Note: flex-direction:column is set globally on body; mobile overrides only layout specifics */
 @media(max-width:900px){
-  body{flex-direction:column}
   .nav-inner{padding:.6rem 1.25rem;gap:.75rem}
   #topnav nav{display:none}
   .theme-toggle{display:none}
@@ -285,6 +294,7 @@ h2.section-title{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,
   .poetry-banner{flex-direction:column;align-items:flex-start}
   .cv-grid{grid-template-columns:1fr}
   .cv-actions{flex-direction:column}
+  .hero-photo{width:130px;height:130px}
 }
 </style>
 </head>
@@ -395,7 +405,19 @@ h2.section-title{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,
   <!-- About -->
   <section id="about" class="fade-in">
     <div class="section-label">About</div>
-    <h2 class="section-title">Anish Subedi</h2>
+    <div class="hero-center">
+      <div class="hero-photo-wrap">
+        <img
+          src="https://github.com/AnishSubedi-create.png"
+          alt="Anish Subedi"
+          class="hero-photo"
+          width="160" height="160"
+          onerror="this.style.display='none'"
+        >
+      </div>
+      <h2 class="hero-name">Anish Subedi</h2>
+      <p class="hero-title">Researcher · Biologist · Storyteller</p>
+    </div>
     <div class="hero-bio">
       <p>I work at the boundary where wet-lab biology meets computational science and biophysics. As a Research Technician at the UNM Health Sciences Center, my days move between bench experiments, running qPCR, executing protein biochemistry workflows for mass spectrometry, and conducting BSL-2 viral infection assays, and building automated analysis pipelines in Python and R for adenoviral protein interactomes, RNA-Seq datasets, and biomolecular condensate prediction. I have integrated pyDNA-EPBD, a DNA breathing dynamics tool developed at Los Alamos National Laboratory's Theoretical Division, into my ongoing virology research, and I am actively exploring the biophysics of liquid-liquid phase separation in viral replication centers.</p>
       <p>Science, for me, has never been separate from storytelling. I am a lifelong writer and poet, and I believe that how we communicate ideas, with precision, with care, with narrative, is as important as the ideas themselves. That conviction has driven me toward digital media as a tool for social change. In collaboration with Scott MacLennan, CEO of The Mountain Fund, I have produced Nepali-language awareness videos addressing exploitative foreign labor schemes that have reached over 1.3 million viewers combined.</p>
